@@ -1,0 +1,53 @@
+{% load static %}
+<!-- ================================
+Start Navigation Bar
+================================= -->
+<header class="header" id="header">
+    <nav class="nav container">
+        <a href="{% url 'plantswebsite:home' %}" class="nav__logo">
+            <i class="ri-leaf-line nav__logo-icon"></i> Recent Gardener
+        </a>
+
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    {% comment %} <a href="{% url 'plantswebsite:home' %}" class="nav__link active-link">Home</a> {% endcomment %}
+                    <a href="{% url 'plantswebsite:home' %}" class="nav__link">Home</a>
+                </li>
+                <li class="nav__item">
+                    <a href="#about" class="nav__link">About</a>
+                </li>
+                <li class="nav__item">
+                    <a href="#products" class="nav__link">Products</a>
+                </li>
+                <li class="nav__item">
+                    <a href="{% url 'plantswebsite:shop' %}" class="nav__link">Shop</a>
+                </li>
+                <li class="nav__item">
+                    <a href="#cart" class="nav__link">Cart</a>
+                </li>
+                <li class="nav__item">
+                    <a href="{% url 'plantswebsite:contact' %}" class="nav__link">Contact Us</a>
+                </li>
+            </ul>
+
+            <div class="nav__close" id="nav-close">
+                <i class="ri-close-line"></i>
+            </div>
+        </div>
+
+        <div class="nav__btns">
+            <!-- Theme Change Button -->
+            <i class="ri-moon-line change-theme" id="theme-button"></i>
+
+            <div class="nav__toggle" id="nav-toggle">
+                <i class="ri-menu-line"></i>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+<!-- ================================
+End Navigation Bar
+================================= -->

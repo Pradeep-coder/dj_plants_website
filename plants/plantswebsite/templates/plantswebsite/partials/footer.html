@@ -1,0 +1,62 @@
+{% load static %}
+<!--==========FOOTER===========-->
+<footer class="footer section">
+    <div class="footer__container container grid">
+        <div class="footer__content">
+            <a href="#" class="footer__logo">
+                <i class="ri-leaf-line footer__logo-icon"></i> Recent Gardener
+            </a>
+
+            <h3 class="footer__title">
+                Subscribe to our newsletter <br> to stay connected 
+            </h3>
+            <div class="footer__subscribe">
+                <input type="email" placeholder="Enter mail" class="footer__input">
+                <button class="button button--flex footer__button">
+                    Subscribe
+                    <i class="ri-arrow-right-up-line button__icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="footer_content">
+            <h3 class="footer__title">Our Address</h3>
+
+            <ul class="footer__data">
+                <li class="footer__information">123456 - India</li>
+                <li class="footer__information">Bangalore - Karnataka</li>
+                <li class="footer__information">123-456-789</li>
+            </ul>
+        </div>
+        <div class="footer_content">
+            <h3 class="footer__title">Contact US</h3>
+
+            <ul class="footer__data">
+                <li class="footer__information">+91- 123456</li>
+                <div class="footer__social">
+                    <a href="https://www.facebook.com" class="footer__social-link">
+                        <i class="ri-facebook-fill"></i>
+                    </a>
+                    <a href="https://www.instagram.com" class="footer__social-link">
+                        <i class="ri-instagram-fill"></i>
+                    </a>
+                    <a href="https://www.twitter.com" class="footer__social-link">
+                        <i class="ri-twitter-fill"></i>
+                    </a>
+                </div>
+            </ul>
+        </div>
+        <div class="footer_content">
+            <h3 class="footer__title">We accept all credit cards</h3>
+
+            <div class="footer_cards">
+                <img src="{% static 'images/card1.png' %}" alt="" class="footer__card">
+                <img src="{% static 'images/card2.png' %}" alt="" class="footer__card">
+                <img src="{% static 'images/card3.png' %}" alt="" class="footer__card">
+                <img src="{% static 'images/card4.png' %}" alt="" class="footer__card">
+            </div>
+        </div>
+    </div>
+
+    <p class="footer__copy">&#169; RecentCoder. All Rights Reserved.</p>
+</footer>

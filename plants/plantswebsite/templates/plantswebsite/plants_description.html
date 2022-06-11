@@ -1,0 +1,59 @@
+{% extends 'plantswebsite/base.html' %}
+{% load static %}
+
+
+{% block title %}Plants Description{% endblock %}
+{% block decription %}{% endblock %}
+{% block keywords %}{% endblock %}
+
+
+{% block content %}
+<!--==========Plants Description===========-->
+
+<section class="palntsdetail section container" id="palntsdetail">
+    <div class="about__container grid">
+        <img src="{{plants_object.image.url}}" alt="plantsdetail image" class="about__img">
+
+        <div class="about__data">
+            <h2 class="section__title about__title">
+                {{plants_object.name}}
+            </h2>
+
+            <p class="about__description">
+                {{plants_object.description}}
+            </p>
+            <h2 class="about__description">
+                ₹ {{plants_object.price}}
+            </h2>
+
+            <div class="div about__details">
+                <h3 class="about__title">
+                    Plant Highlights
+                </h3>
+                <p class="about__details-description">
+                    <i class="ri-checkbox-fill about__details-icon"></i>
+                    {{ plants_object.highlights_one }}
+                </p>
+                <p class="about__details-description">
+                    <i class="ri-checkbox-fill about__details-icon"></i>
+                    {{ plants_object.highlights_two }}
+                </p>
+                <p class="about__details-description">
+                    <i class="ri-checkbox-fill about__details-icon"></i>
+                    {{ plants_object.highlights_three }}
+                </p>
+                <p class="about__details-description">
+                    <i class="ri-checkbox-fill about__details-icon"></i>
+                    {{ plants_object.highlights_four }}
+                </p>
+            </div>
+
+            <a href="#addtocart" class="button button--flex">
+                Add to Cart <i class="ri-arrow-right-up-line button__icon"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+{%endblock%}

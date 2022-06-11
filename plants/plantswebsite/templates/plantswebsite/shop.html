@@ -1,0 +1,40 @@
+{% extends 'plantswebsite/base.html' %}
+{% load static %}
+
+
+{% block title %}Shop Now{% endblock %}
+{% block decription %}{% endblock %}
+{% block keywords %}{% endblock %}
+
+
+{% block content %}
+<!--==========SHOP===========-->
+<section class="shop section container" id="shop">
+    <h2 class="section__title-center">
+        Shop From Our Exotic Plants
+    </h2>
+    <p class="shop__description">
+        Here are some selected plants from our showroom, all are in 
+        excellent shape and has a long life span. Buy and enjoy best quality.
+    </p>
+    
+    <div class="shop__container grid">
+        {% for s in shop_plants %}
+        {% comment %} {% if c.is_active %} {% endcomment %}
+        <article class="shop__card">
+            <div class="shop__circle"></div>
+                
+                <a href="{{s.id}}"> <img src="{{ s.image.url }}" alt="" class="shop__img"></a>
+                <h3 class="shop__title">{{ s.name }}</h3>
+                <span class="shop__price">${{ s.price }}</span>
+                <button class="button--flex product__button">
+                    <i class="ri-shopping-bag-line"></i>
+                </button>
+        </article>
+        {% comment %} {% endif %} {% endcomment %}
+        {% endfor %}
+    </div>     
+</section>
+
+
+{%endblock%}
