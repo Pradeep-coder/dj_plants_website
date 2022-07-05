@@ -1,0 +1,69 @@
+{% extends 'plantswebsite/base.html' %}
+{% load static %} 
+
+
+{% block title %}Recent Gardener | Register{% endblock %}
+{% block decription %}{% endblock %}
+{% block keywords %}{% endblock %} 
+
+
+{% block content %}
+
+{% comment %} {{form.as_p}} {% endcomment %}
+<section class="contact section container" id="register">
+<div class="contact__container grid">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="">
+                <div class="card mt-3 shadow contact__inputs">
+                    <div class="card-body ">
+                        <form action="" method="POST" class="contact__form">
+                            {% csrf_token %}
+                            <div class="contact__inputs">
+                                <div class="text-center">
+                                    <h2> Register with Recent Gardener </h2>
+                                </div>
+                                {% comment %} <hr> {% endcomment %}
+                                <div class="contact__content">
+                                    {{ form.username }}
+                                    <label for="" class="contact__label"> Username </label>
+                                    {% if form.errors.username %}
+                                        <label class="text-danger"> {{ form.errors.username }}</label>
+                                    {% endif %} 
+                                </div>
+                                <div class="form-group contact__content">
+                                    {{ form.email }}
+                                    <label for="" class="contact__label"> Email </label>
+                                    {% if form.errors.email %}
+                                        <label class="text-danger"> {{ form.errors.email }}</label>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group contact__content">
+                                    {{ form.password1 }}
+                                    <label for="" class="contact__label"> Password </label>
+                                    {% if form.errors.password1 %}
+                                        <label class="text-danger"> {{ form.errors.password1 }}</label>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group contact__content">
+                                    {{ form.password2 }}
+                                    <label for="" class="contact__label"> Confirm Password </label>
+                                    {% if form.errors.password2 %}
+                                        <label class="text-danger"> {{ form.errors.password2 }}</label>
+                                    {% endif %}
+                                </div>
+                                <button type='submit' class="button button--flex">
+                                    Register
+                                    <i class="ri-arrow-right-up-line button__icon"></i>
+                                </button> 
+                            </div>
+                        </form>
+                        <h6>Already have an account?<a href="{% url 'plantswebsite:login' %} " class="footer__social-link"> Login</a></h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+{%endblock%}

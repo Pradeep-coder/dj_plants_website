@@ -1,6 +1,7 @@
-from email import message
+from django.shortcuts import reverse
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 # Create your models here.
 class UserProfile(models.Model):
@@ -41,6 +42,32 @@ class Plants(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def get_add_to_cart_url(self):
+        print("touched here!")
+        return reverse('core:add_to_cart', kwargs={
+            'id':self.id
+        })
+
+
+class PlantsOrderItem(models.Model):
+    item = models.ForeignKey(Plants, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.quantity} of {self.item.name}"
+
+
+class PlantsOrder(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    items = models.ManyToManyField(PlantsOrderItem)
+    start_date = models.DateTimeField(auto_now_add=True)
+    ordered_date = models.DateTimeField()
+    ordered = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.username
 
 class About(models.Model):
     class Meta:

@@ -22,7 +22,10 @@ Start Content
                     {{landingscreens.title}}
                 </h1>
                 <p class="home__description">
-                    {{landingscreens.description}}
+                    {{landingscreens.description}} 
+                    {% if user.is_authenticated %}
+                     <strong>{{user}}</strong>! Let's begin the journey!
+                    {% endif %}
                 </p>
                 <a href="#products" class="button button--flex">
                     Explore <i class="ri-arrow-right-down-line button__icon"></i>
@@ -152,7 +155,7 @@ Start Content
         <div class="col-auto">
             {% comment %} <a href="{% url 'main:portfolios' %}" class="simpleLink">View all</a> {% endcomment %}
             <a href="{% url 'plantswebsite:shop' %}" class="simpleLink">View all</a>
-          </div>
+        </div>
         <div class="slideshow__container grid">
             {% for s in plants_ss %}
             <article class="slideshow__card">

@@ -2,7 +2,7 @@
 {% load static %}
 
 
-{% block title %}Plants Description{% endblock %}
+{% block title %}Recent Gardener | Plants Description{% endblock %}
 {% block decription %}{% endblock %}
 {% block keywords %}{% endblock %}
 
@@ -10,7 +10,7 @@
 {% block content %}
 <!--==========Plants Description===========-->
 
-<section class="palntsdetail section container" id="palntsdetail">
+<section class="plantsdetail section container" id="plantsdetail">
     <div class="about__container grid">
         <img src="{{plants_object.image.url}}" alt="plantsdetail image" class="about__img">
 
@@ -48,7 +48,7 @@
                 </p>
             </div>
 
-            <a href="#addtocart" class="button button--flex">
+            <a href="{{ object_list.get_add_to_cart_url }}" class="button button--flex">
                 Add to Cart <i class="ri-arrow-right-up-line button__icon"></i>
             </a>
         </div>

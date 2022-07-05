@@ -2,7 +2,7 @@
 {% load static %}
 
 
-{% block title %}Contact Us{% endblock %}
+{% block title %}Recent Gardener | Contact Us{% endblock %}
 {% block decription %}{% endblock %}
 {% block keywords %}{% endblock %}
 
@@ -41,12 +41,12 @@
             {% csrf_token %}
             <div class="contact__inputs">
                 <div class="contact__content">
-                    <input type="email" name="email" placeholder=" " class="contact__input">
+                    <input type="email" name="email" placeholder=" " class="contact__input" required>
                     <label for="" class="contact__label">Email</label>
                     
                 </div>
                 <div class="contact__content">
-                    <input type="text" name="name" placeholder=" " class="contact__input">
+                    <input type="text" name="name" placeholder=" " class="contact__input" required>
                     <label for="" class="contact__label">Name</label>
                     
                 </div>
