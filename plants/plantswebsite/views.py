@@ -1,6 +1,6 @@
 from multiprocessing import context
 from time import timezone
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from .forms import *
@@ -64,23 +64,6 @@ class PlantsDescriptionView(ListView):
     model = Plants
     template_name = "plants_description.html"
 
-def add_to_cart(request, id):
-    item = get_object_or_404(Plants, id=id)
-    order_item = PlantsOrderItem.objects.create(item=item)
-    order_qs = PlantsOrder.objects.filter(user=request.user, ordered=False)
-    if order_qs.exists():
-        order = order_qs[0]
-        #check if the order item is in the order
-        if order.items.filter(item__id=item.id).exists():
-            order_item.quantity += 1
-            order_item.save()
-    else:
-        ordered_date = timezone.now()
-        order = PlantsOrder.objects.create(user=request.user, ordered_date=ordered_date)
-        order.items.add(order_item)
-    return redirect("core:plantsdescription",id=id)
-
-
 def register(request):
     form = CustomUserForm()
     if request.method == 'POST':
@@ -115,6 +98,33 @@ def logoutpage(request):
     if request.user.is_authenticated:
         logout(request)
     return redirect("/home")
+
+def addtocart(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            product_id = int(request.POST.get('product_id'))
+            product_check = Plants.objects.get(id=product_id)
+            if(product_check):
+                if(Cart.objects.filter(user=request.user.id, product_id=product_id)):
+                    return JsonResponse({'status':'Product already in cart'})
+                else:
+                    product_quantity = int(request.POST.get('product_quantity'))
+
+                    if product_check.quantity >= product_quantity:
+                        Cart.objects.create(user=request.user, product_id=product_id, product_quantity=product_quantity)
+                        return JsonResponse({'status':'Product addded to cart'})
+                    else:
+                        return JsonResponse({'status':'Only' + str(product_check.quantity) + "quantity is available"})
+            else:
+                return JsonResponse({'status':'No product found'})
+        else:
+            return JsonResponse({'status':'Login to Continue'})
+    return redirect("/home")
+
+def viewcart(request):
+    cart = Cart.objects.filter(user=request.user)
+    context = {'cart':cart}
+    return render(request,"plantswebsite/cart.html", context)
 
 
 # def ContactProfileView(request):

@@ -1,0 +1,54 @@
+{% extends 'plantswebsite/base.html' %}
+{% load static %}
+
+
+{% block title %}Recent Gardener | Cart{% endblock %}
+{% block decription %}{% endblock %}
+{% block keywords %}{% endblock %}
+
+
+{% block content %}
+<!--==========CART PAGE===========-->
+<section class="footer section container" id="viewcart">
+        {% if cart %}
+            {% for item in cart %}
+            <div class="footer__container container grid product_data">
+                <div class="footer_content">
+                    <img src="{{ item.product.image.url }}" height="70px" width="60px" alt="Product Image">
+                </div>
+
+                <div class="footer_content">
+                    <ul class="footer__data">
+                        <li class="footer__information">{{ item.product.name }}</li>
+                        <li class="footer__information">₹ {{ item.product.price }}</li>
+                    </ul>
+                </div>
+                <div class="footer_content">
+                    <input type="hidden" class="prod_id" value="{{ item.product_id }}">
+                    {% csrf_token %}
+                    {% if item.product.quantity >= item.product_quantity %}
+                    <ul class="footer__data">
+                        <li class="footer__information"><button class="button button--flex incdec__button decrement-btn">-</button>
+                        <input type="text" name="quantity" class="incdec__input form-control qty-input text-center" value="1">
+                        <button class="button button--flex incdec__button increment-btn">+</button></li>
+                    </ul>
+                    {% else %}
+                        <h6>Out of Stock</h6>
+                    {% endif %}
+                </div>
+                <div class="footer_content">
+                    <div class="footer_cards">
+                        <a href="#" class="button button--flex">
+                            Remove <i class="ri-arrow-right-up-line button__icon"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </br>
+            {% endfor %}
+        {% else %}
+        <h4>Your Cart is Empty!</h4>
+        {% endif %}
+
+</section>
+{%endblock%}

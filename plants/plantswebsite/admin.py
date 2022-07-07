@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import About, ContactProfile, LandingScreen, Plants, PlantsOrder, PlantsOrderItem,UserProfile
+from .models import About, Cart, ContactProfile, LandingScreen, Plants, UserProfile
 
 # Register your models here.
 @admin.register(UserProfile)
@@ -13,7 +13,7 @@ class LandingScreenAdmin(admin.ModelAdmin):
 
 @admin.register(Plants)
 class PlantsAdmin(admin.ModelAdmin):
-    list_display = ('id','name','price')
+    list_display = ('id','name','quantity','price')
 
 @admin.register(About)
 class AboutAdmin(admin.ModelAdmin):
@@ -23,12 +23,9 @@ class AboutAdmin(admin.ModelAdmin):
 class ContactProfileAdmin(admin.ModelAdmin):
     list_display = ('id','timestamp','name')
 
-@admin.register(PlantsOrderItem)
-class PlantsOrderItemAdmin(admin.ModelAdmin):
-    list_display = ('id','item')
+@admin.register(Cart)
+class CartAdmin(admin.ModelAdmin):
+    list_display = ('id','user','product','product_quantity','created_at')
 
-@admin.register(PlantsOrder)
-class PlantsOrderAdmin(admin.ModelAdmin):
-    list_display = ('id','user','ordered_date','ordered')
 
 

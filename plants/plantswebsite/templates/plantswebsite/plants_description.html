@@ -10,8 +10,8 @@
 {% block content %}
 <!--==========Plants Description===========-->
 
-<section class="plantsdetail section container" id="plantsdetail">
-    <div class="about__container grid">
+<section class="plantsdetail section container product_data" id="plantsdetail">
+    <div class="about__container grid product_data">
         <img src="{{plants_object.image.url}}" alt="plantsdetail image" class="about__img">
 
         <div class="about__data">
@@ -25,6 +25,17 @@
             <h2 class="about__description">
                 ₹ {{plants_object.price}}
             </h2>
+            
+            <div class="incdec__subscribe">
+                {% csrf_token %}
+                {% comment %} <label for="Quantity"> Quantity</label> {% endcomment %}
+                <input type="hidden" value="{{ plants_object.id }}" class="prod_id">
+                <button class="button button--flex incdec__button decrement-btn">-</button>
+                <input type="text" name="quantity" class="incdec__input form-control qty-input text-center" value="1">
+                <button class="button button--flex incdec__button increment-btn">+</button>
+                    
+            </div>
+
 
             <div class="div about__details">
                 <h3 class="about__title">
@@ -48,7 +59,7 @@
                 </p>
             </div>
 
-            <a href="{{ object_list.get_add_to_cart_url }}" class="button button--flex">
+            <a href="#" class="button button--flex addToCartBtn">
                 Add to Cart <i class="ri-arrow-right-up-line button__icon"></i>
             </a>
         </div>

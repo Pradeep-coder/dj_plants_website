@@ -32,9 +32,12 @@ class Plants(models.Model):
         verbose_name = 'Plant'
 
     name = models.CharField(max_length=244, blank=False, null=True)
-    price = models.IntegerField(blank=False, null=True)
+    price = models.FloatField(blank=False, null=True)
     description = models.CharField(max_length=244, blank=True, null=True)
     image = models.ImageField(blank=True, null=True, upload_to='plants')
+    quantity = models.IntegerField(null=False, blank=False)
+    status = models.BooleanField(default=False, help_text="0-default, 1-Hidden")
+    trending = models.BooleanField(default=False, help_text="0-default, 1-Hidden")
     highlights_one = models.CharField(max_length=128, blank=True, null=True)
     highlights_two = models.CharField(max_length=128, blank=True, null=True)
     highlights_three = models.CharField(max_length=128, blank=True, null=True)
@@ -43,31 +46,11 @@ class Plants(models.Model):
     def __str__(self):
         return self.name
 
-    @property
-    def get_add_to_cart_url(self):
-        print("touched here!")
-        return reverse('core:add_to_cart', kwargs={
-            'id':self.id
-        })
-
-
-class PlantsOrderItem(models.Model):
-    item = models.ForeignKey(Plants, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-
-    def __str__(self):
-        return f"{self.quantity} of {self.item.name}"
-
-
-class PlantsOrder(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    items = models.ManyToManyField(PlantsOrderItem)
-    start_date = models.DateTimeField(auto_now_add=True)
-    ordered_date = models.DateTimeField()
-    ordered = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.user.username
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Plants, on_delete=models.CASCADE)
+    product_quantity = models.IntegerField(null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class About(models.Model):
     class Meta:

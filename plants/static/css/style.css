@@ -783,6 +783,27 @@ of the website on dark theme
     margin: 5rem 0 1rem;
 }
 /*======FOOTER END======*/
+/*==Increment Decrement button ==*/
+.incdec__subscribe{
+    background-color: var(--first-color-lighten);
+    padding: .75rem;
+    display: flex;
+    justify-content: space-between;
+    border-radius: .5rem;
+    width: 290px;
+}
+.incdec__input{
+    width: 20%;
+    padding: 0 .5rem;
+    background: none;
+    color: var(--text-color);
+    border: none;
+    outline: none;
+}
+.incdec__button{
+    padding: .5rem;
+}
+/*==Increment Decrement button END ==*/
 /*==============SCROLL UP==========*/
 .scrollup{
     position: fixed;
@@ -887,6 +908,9 @@ of the website on dark theme
     .footer__subscribe{
         width: 400px;
     }
+    .incdec__subscribe{
+        width: 400px;
+    }
 }
 
 @media screen and (min-width: 767px) {
@@ -936,6 +960,9 @@ of the website on dark theme
     }
     .footer__subscribe{
         width: initial;
+    }
+    .incdec__subscribe{
+        width:initial;
     }
 }
 /*===For large devices===*/
