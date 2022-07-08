@@ -37,8 +37,8 @@ $(document).ready(function (){
     $('.addToCartBtn').click(function (e){
         e.preventDefault();
 
-        var product_id = $(this).closest('.product_data').find('.prod_id').val()
-        var product_quantity = $(this).closest('.product_data').find('.qty-input').val()
+        var product_id = $(this).closest('.product_data').find('.prod_id').val();
+        var product_quantity = $(this).closest('.product_data').find('.qty-input').val();
         var token = $('input[name=csrfmiddlewaretoken]').val();
         $.ajax({
             method: "POST",
@@ -46,7 +46,7 @@ $(document).ready(function (){
             data: {
                 'product_id': product_id,
                 'product_quantity': product_quantity,
-                csrfmiddlewaretoken: token,
+                csrfmiddlewaretoken: token
             },
             dataType: "dataType",
             success: function (response){
@@ -57,6 +57,52 @@ $(document).ready(function (){
 
     });
 
+
+    
+    $('.changeQuantity').click(function (e){
+        e.preventDefault();
+
+        var product_id = $(this).closest('.product_data').find('.prod_id').val();
+        var product_quantity = $(this).closest('.product_data').find('.qty-input').val();
+        var token = $('input[name=csrfmiddlewaretoken]').val();
+        $.ajax({
+            method: "POST",
+            url: "/update-cart",
+            data: {
+                'product_id': product_id,
+                'product_quantity': product_quantity,
+                csrfmiddlewaretoken: token
+            },
+            dataType: "dataType",
+            success: function (response){
+                console.log(response)
+            }
+        });
+
+
+    });
+
+
+    $('.delete-cart-item').click(function (e){
+        e.preventDefault();
+
+        var product_id = $(this).closest('.product_data').find('.prod_id').val();
+        var token = $('input[name=csrfmiddlewaretoken]').val();
+
+        $.ajax({
+            method: "POST",
+            url: "/delete-cart-item",
+            data: {
+                'product_id': product_id,
+                csrfmiddlewaretoken: token
+            },
+            success: function (response) {
+                console.log(response)
+                $('.cartdata').load(location.href + " .cartdata");
+
+            }
+        });
+    });
 
 
 

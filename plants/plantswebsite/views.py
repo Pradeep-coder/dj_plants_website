@@ -126,6 +126,28 @@ def viewcart(request):
     context = {'cart':cart}
     return render(request,"plantswebsite/cart.html", context)
 
+def updatecart(request):
+    if request.method == "POST":
+        product_id = int(request.POST.get('product_id'))
+        if (Cart.objects.filter(user=request.user, product_id=product_id)):
+            product_quantity = int(request.POST.get('product_quantity'))
+            cart = Cart.objects.get(product_id=product_id, user=request.user)
+            cart.product_quantity = product_quantity
+            cart.save()
+            return JsonResponse({'status':"Cart Updated Successfully!",'product_quantity':cart.product_quantity})
+    return redirect("/home")
+
+
+def deletecartitem(request):
+    if request.method == "POST":
+        product_id = int(request.POST.get('product_id'))
+        if (Cart.objects.filter(user=request.user, product_id=product_id)):
+            cartitem = Cart.objects.get(product_id=product_id, user=request.user)
+            cartitem.delete()
+        return JsonResponse({'status':"Deleted Successfully!"})
+    return redirect("/home")
+        
+
 
 # def ContactProfileView(request):
 #     print(request.POST)

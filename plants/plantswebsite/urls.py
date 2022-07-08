@@ -17,10 +17,6 @@ urlpatterns = [
 	path('logout/', views.logoutpage, name="logout"),
 	path('add-to-cart', views.addtocart, name="addtocart"),
 	path('cart/', views.viewcart, name="cart"),
-    # path('demo/', views.demo, name="demo"),
-	# path('contact/', views.ContactView.as_view(), name="contact"),
-	# path('portfolio/', views.PortfolioView.as_view(), name="portfolios"),
-	# path('portfolio/<slug:slug>', views.PortfolioDetailView.as_view(), name="portfolio"),
-	# path('blog/', views.BlogView.as_view(), name="blogs"),
-	# path('blog/<slug:slug>', views.BlogDetailView.as_view(), name="blog"),
+	path('update-cart', views.updatecart, name="updatecart"),
+	path('delete-cart-item', views.deletecartitem, name="deletecartitem"),
 	]

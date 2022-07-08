@@ -9,7 +9,7 @@
 
 {% block content %}
 <!--==========CART PAGE===========-->
-<section class="footer section container" id="viewcart">
+<section class="cartdata section container" id="viewcart">
         {% if cart %}
             {% for item in cart %}
             <div class="footer__container container grid product_data">
@@ -28,9 +28,11 @@
                     {% csrf_token %}
                     {% if item.product.quantity >= item.product_quantity %}
                     <ul class="footer__data">
-                        <li class="footer__information"><button class="button button--flex incdec__button decrement-btn">-</button>
-                        <input type="text" name="quantity" class="incdec__input form-control qty-input text-center" value="1">
-                        <button class="button button--flex incdec__button increment-btn">+</button></li>
+                        <li class="footer__information">
+                            <button class="button button--flex incdec__button decrement-btn changeQuantity ">-</button>
+                            <input type="text" name="quantity" class="incdec__input form-control qty-input text-center" value="{{ item.product_quantity }}">
+                            <button class="button button--flex incdec__button increment-btn changeQuantity">+</button>
+                        </li>
                     </ul>
                     {% else %}
                         <h6>Out of Stock</h6>
@@ -38,7 +40,7 @@
                 </div>
                 <div class="footer_content">
                     <div class="footer_cards">
-                        <a href="#" class="button button--flex">
+                        <a href="#" class="button button--flex delete-cart-item">
                             Remove <i class="ri-arrow-right-up-line button__icon"></i>
                         </a>
                     </div>
@@ -48,6 +50,8 @@
             {% endfor %}
         {% else %}
         <h4>Your Cart is Empty!</h4>
+        </br>
+        <h5>Get Started! <a href="{% url 'plantswebsite:shop' %}" class="footer__logo-icon"> Shop Now.</a></h5>
         {% endif %}
 
 </section>

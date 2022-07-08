@@ -790,7 +790,7 @@ of the website on dark theme
     display: flex;
     justify-content: space-between;
     border-radius: .5rem;
-    width: 290px;
+    width: 160px;
 }
 .incdec__input{
     width: 20%;
@@ -909,7 +909,7 @@ of the website on dark theme
         width: 400px;
     }
     .incdec__subscribe{
-        width: 400px;
+        width: 200px;
     }
 }
 
@@ -962,7 +962,7 @@ of the website on dark theme
         width: initial;
     }
     .incdec__subscribe{
-        width:initial;
+        width: max-content;
     }
 }
 /*===For large devices===*/
