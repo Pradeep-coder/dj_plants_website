@@ -1,0 +1,134 @@
+{% extends 'plantswebsite/base.html' %}
+{% load static %}
+
+
+{% block title %}Recent Gardener | Checkout{% endblock %}
+{% block decription %}{% endblock %}
+{% block keywords %}{% endblock %}
+
+
+{% block content %}
+<!--==========CHECKOUT PAGE===========-->
+<section class="checkout section" id="checkout">
+    <div class="contact__container container grid">
+{% comment %} First Half {% endcomment %}
+        <form id="checkoutForm" method="POST" action="{% url 'plantswebsite:placeorder' %}" class="checkout__form">
+            {% csrf_token %}
+            <div class="checkout__inputs contact__container">
+                <div class="checkout__content">
+                    <input type="text" value="{{ request.user.first_name }}" name="firstname" placeholder=" " class="checkout__input" required>
+                    <label for="" class="checkout__label">First Name</label>
+                    
+                </div>
+                <div class="checkout__content">
+                    <input type="text" value="{{ request.user.last_name }}" name="lastname" placeholder=" " class="checkout__input" required>
+                    <label for="" class="checkout__label">Last Name</label>
+                    
+                </div>
+                <div class="checkout__content">
+                    <input type="email" value="{{ request.user.email }}" name="email" placeholder=" " class="checkout__input" required>
+                    <label for="" class="checkout__label">Email</label>
+                    
+                </div>
+                <div class="checkout__content">
+                    <input type="number" value="{{ userProfile.phone }}" name="phone" placeholder=" " class="checkout__input" required>
+                    <label for="" class="checkout__label">Phone</label>
+                    
+                </div>
+                <div class="checkout__content">
+                    <input type="address" value="{{ userProfile.address }}" name="address" placeholder=" " class="checkout__input" required>
+                    <label for="" class="checkout__label">Address</label>
+                    
+                </div>
+                <div class="checkout__content">
+                    <input type="text" value="{{ userProfile.city }}" name="city" placeholder=" " class="checkout__input" required>
+                    <label for="" class="checkout__label">City</label>
+                    
+                </div>
+                <div class="checkout__content">
+                    <input type="text" value="{{ userProfile.state }}" name="state" placeholder=" " class="checkout__input" required>
+                    <label for="" class="checkout__label">State</label>
+                    
+                </div>
+                <div class="checkout__content">
+                    <input type="text" value="{{ userProfile.country }}" name="country" placeholder=" " class="checkout__input" required>
+                    <label for="" class="checkout__label">Country</label>
+                    
+                </div>
+                <div class="checkout__content">
+                    <input type="number" value="{{ userProfile.pincode }}" name="pincode" placeholder=" " class="checkout__input" required>
+                    <label for="" class="checkout__label">Pin Code</label>
+                    
+                </div>
+            </div>
+            <div class="contact__container">
+                <input type="hidden" value="COD" name="payment_mode">
+                <button type="submit" class="button button--flex">
+                    Place Order | COD
+                    <i class="ri-arrow-right-up-line button__icon"></i>
+                </button>
+                <button type="button" class="button button--flex payWithRazorpay">
+                    Pay with Razorpay
+                    <i class="ri-arrow-right-up-line button__icon"></i>
+                </button>
+            </div>
+        </form>
+{% comment %} Second half {% endcomment %}
+        <div class="contact__box checkout_table">
+            <h2 class="section__title-centers">
+                Order Summary
+            </h2>
+            <div class="checkout__data section__title-table">
+                <div class="contact__information">
+                    {% if cartItems %}
+                        <table class="table-stripeds">
+                            <thead>
+                                <tr>
+                                    <th class="table_th">Product</th>
+                                    <th class="table_th">Quantity</th>
+                                    <th class="table_th">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in cartItems %}
+                                    <tr>
+                                        <td class="table_td">
+                                            <img src="{{ item.product.image.url }}" class="me-2" height="30px" width="30px">
+                                            {{ item.product.name }}
+                                        </td>
+                                        <td class="table_td">{{ item.product_quantity }}</td>
+                                        <td class="table_td">{{ item.product.price }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        
+                        <div class="footer_content">
+                            <div class="footer_cards">
+                                <h4 class="section__title-centers">
+                                    Grand Total:
+                                    <span> ₹ {{ totalPrice }} </span>
+                                </h4>
+                                <a href="#" class="button button--flex section__title-centers">
+                                    Place Order
+                                </a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <h4 class="section__title-center">Your Checkout is Empty!</h4>
+                        </br>
+                        <h5 class="section__title-center">Get Started! <a href="{% url 'plantswebsite:shop' %}" class="footer__logo-icon"> Shop Now.</a></h5>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{%endblock%}
+
+{% block scripts %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% endblock scripts %}

@@ -48,10 +48,17 @@
             </div>
         </br>
             {% endfor %}
+            <div class="footer_content">
+                <div class="footer_cards">
+                    <a href="{% url 'plantswebsite:checkout' %}" class="button button--flex">
+                        Checkout <i class="ri-arrow-right-up-line button__icon"></i>
+                    </a>
+                </div>
+            </div>
         {% else %}
-        <h4>Your Cart is Empty!</h4>
-        </br>
-        <h5>Get Started! <a href="{% url 'plantswebsite:shop' %}" class="footer__logo-icon"> Shop Now.</a></h5>
+            <h4 class="section__title-center">Your Cart is Empty!</h4>
+            </br>
+            <h5 class="section__title-center">Get Started! <a href="{% url 'plantswebsite:shop' %}" class="footer__logo-icon"> Shop Now.</a></h5>
         {% endif %}
 
 </section>

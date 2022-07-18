@@ -1,0 +1,47 @@
+{% extends 'plantswebsite/base.html' %}
+{% load static %}
+
+
+{% block title %}Recent Gardener | My Orders{% endblock %}
+{% block decription %}{% endblock %}
+{% block keywords %}{% endblock %}
+
+
+{% block content %}
+<!--==========My Orders PAGE===========-->
+<section class="myordersdata section container" id="viewmyorders">
+        {% for order in userOrders %}
+        <div class="footer__container container grid product_data">
+            <div class="footer_content">
+                {% comment %} <img src="{{ order.product.image.url }}" height="70px" width="60px" alt="Product Image"> {% endcomment %}
+                <h3>{{ order.tracking_number }}</h3>
+            </div>
+
+            <div class="footer_content">
+                <ul class="footer__data">
+                    <li class="footer__information">₹ {{ order.total_price }}</li>
+                    <li class="footer__information"><h5>{{ order.created_at }}</h5></li>
+                </ul>
+            </div>
+            <div class="footer_content">
+                <ul class="footer__data">
+                    <li class="footer__information">
+                        {{ order.status }}
+                    </li>
+                </ul>
+            </div>
+            <div class="footer_content">
+                <div class="footer_cards">
+                    <a href="{% url 'plantswebsite:viewuserorders' order.tracking_number %}" class="button button--flex">
+                        View <i class="ri-arrow-right-up-line button__icon"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </br>
+{% endfor %}
+
+</section>
+
+
+{%endblock%}

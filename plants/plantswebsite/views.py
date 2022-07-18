@@ -10,6 +10,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.views.generic import ListView, DetailView
+from django.contrib.auth.decorators import login_required
+import random
+from django.contrib.auth.models import User
 
 # Create your views here.
 class IndexView(generic.TemplateView):
@@ -146,20 +149,123 @@ def deletecartitem(request):
             cartitem.delete()
         return JsonResponse({'status':"Deleted Successfully!"})
     return redirect("/home")
+
+@login_required(login_url='login')
+def checkout(request):
+    rawCartItems = Cart.objects.filter(user=request.user)
+    for item in rawCartItems:
+        if item.product_quantity > item.product.quantity:
+            Cart.objects.delete(id=item.id)
+
+    cartItems = Cart.objects.filter(user=request.user)
+    total_price = 0
+    for item in cartItems:
+        total_price = total_price + item.product.price * item.product_quantity
+
+    userProfile = Profile.objects.filter(user=request.user).first()
+
+    context = {'cartItems': cartItems, 'totalPrice':total_price, 'userProfile':userProfile}
+    return render(request, "plantswebsite/checkout.html", context)
+
+@login_required(login_url='login')
+def placeorder(request):
+    if request.method == 'POST':
+
+        currentUser = User.objects.filter(id=request.user.id).first()
+
+        if not currentUser.first_name:
+            currentUser.first_name = request.POST.get('firstname')
+            currentUser.last_name = request.POST.get('lastname')
+            currentUser.save()
+
+        if not Profile.objects.filter(user=request.user):
+            userProfile = Profile()
+            userProfile.user = request.user
+            userProfile.phone = request.POST.get('phone')
+            userProfile.address = request.POST.get('address')
+            userProfile.city = request.POST.get('city')
+            userProfile.state = request.POST.get('state')
+            userProfile.country = request.POST.get('country')
+            userProfile.pincode = request.POST.get('pincode')
+            userProfile.save()
+
+        newOrder = Order()
+        newOrder.user = request.user
+        newOrder.fname = request.POST.get('firstname')
+        newOrder.lname = request.POST.get('lastname')
+        newOrder.email = request.POST.get('email')
+        newOrder.phone = request.POST.get('phone')
+        newOrder.address = request.POST.get('address')
+        newOrder.city = request.POST.get('city')
+        newOrder.state = request.POST.get('state')
+        newOrder.country = request.POST.get('country')
+        newOrder.pincode = request.POST.get('pincode')
+
+        newOrder.payment_mode = request.POST.get('payment_mode')
+        newOrder.payment_id = request.POST.get('payment_id')
+
+        cart = Cart.objects.filter(user=request.user)
+        cart_total_price = 0
+        for item in cart:
+            cart_total_price = cart_total_price + item.product.price * item.product_quantity
+
+        newOrder.total_price = cart_total_price
+
+        trackNumber = newOrder.fname[:5] + str(random.randint(1111111,9999999))
+        while Order.objects.filter(tracking_number = trackNumber) is None:
+            trackNumber = newOrder.fname[:5] + str(random.randint(1111111,9999999))
+
+        newOrder.tracking_number = trackNumber
+        newOrder.save()
+
+        newOrderItems = Cart.objects.filter(user=request.user)
+        #To create in OrderItem model
+        for items in newOrderItems:
+            OrderItem.objects.create(
+                order = newOrder,
+                product = items.product,
+                price = items.product.price,
+                quantity = items.product_quantity
+            )
+            # To decrease from available Plants stock
+            orderplants = Plants.objects.filter(id=items.product_id).first()
+            orderplants.quantity = orderplants.quantity - items.product_quantity
+            orderplants.save()
+
+        # To clear users cart
+        Cart.objects.filter(user=request.user).delete()
         
+        # return JsonResponse({'status':"Order Placed Successfully!"})
 
+        payMode = request.POST.get('payment_mode')
+        if (payMode == "Paid with Razorpay"):
+            return JsonResponse({'status':"Order Placed Successfully!"})
+        else:
+            messages.success(request, "Order Placed Successfully!")
 
-# def ContactProfileView(request):
-#     print(request.POST)
-#     context = {}
-#     return render(request, "plantswebsite/contact.html", context=context)
+    return redirect('/home')
 
-# def demo(request):
-#     landingscreen = LandingScreen.objects.get()
-#     print(landingscreen.title)
-#     print(landingscreen.image.url)
-#     print(landingscreen.description)
+@login_required(login_url='login')
+def razorpaycheck(request):
+    cart = Cart.objects.filter(user=request.user)
+    total_price = 0
+    for item in cart:
+        total_price = total_price + item.product.price * item.product_quantity
 
-#     return HttpResponse(landingscreen)
+    return JsonResponse({
+        'total_price': total_price
+    })
+
+def orders(request):
+    userOrders = Order.objects.filter(user=request.user)
+    context = {"userOrders":userOrders} 
+    return render(request, "plantswebsite/userorders.html", context)
+
+def viewuserorders(request, t_no):
+    order = Order.objects.filter(tracking_number=t_no).filter(user=request.user).first()
+    orderitems = OrderItem.objects.filter(order=order)
+    context = {'order': order, 'orderitems': orderitems}
+    return render(request, "plantswebsite/viewuserorders.html", context)
+
 
 

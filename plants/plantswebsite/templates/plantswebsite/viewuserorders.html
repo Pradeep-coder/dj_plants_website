@@ -1,0 +1,101 @@
+{% extends 'plantswebsite/base.html' %}
+{% load static %}
+
+
+{% block title %}Recent Gardener | My Order Details{% endblock %}
+{% block decription %}{% endblock %}
+{% block keywords %}{% endblock %}
+
+
+{% block content %}
+<!--==========My Order Detailed PAGE===========-->
+<section class="checkout section" id="checkout">
+    <div class="contact__container container grid">
+{% comment %} First Half {% endcomment %}
+        <div class="container">
+            <div class="checkout__inputs contact__container">
+                <div class="checkout__content">
+                    {% comment %} <label for="" class="checkout__label">{{ order.fname }}</label> {% endcomment %}
+                    {{ order.fname }}
+                </div>
+                <div class="checkout__content">
+                    {% comment %} <label for="" class="checkout__label">{{ order.lname }}</label> {% endcomment %}
+                    {{ order.lname }}
+                </div>
+                <div class="checkout__content">
+                    {% comment %} <label for="" class="checkout__label">{{ order.email }}</label> {% endcomment %}
+                    {{ order.email }}
+                </div>
+                <div class="checkout__content">
+                    {% comment %} <label for="" class="checkout__label">{{ order.phone }}</label> {% endcomment %}
+                    {{ order.phone }}
+                </div>
+                <div class="checkout__content">
+                        {{ order.address }},
+                        {{ order.city }},
+                        {{ order.state }},
+                        {{ order.country }},
+                        {{ order.pincode }}                    
+                </div>
+            </div>
+            <div class="contact__container">
+                <a href="{% url 'plantswebsite:myorders' %}" class="button button--flex">
+                    Back
+                    <i class="ri-arrow-right-up-line button__icon"></i>
+                </a>
+                <button type="button" class="button button--flex">
+                    Download Invoice
+                    <i class="ri-arrow-right-up-line button__icon"></i>
+                </button>
+            </div>
+        </div>
+{% comment %} Second half {% endcomment %}
+        <div class="contact__box checkout_table">
+            <h2 class="section__title-centers">
+                My Order Details
+            </h2>
+            <div class="checkout__data section__title-table">
+                <div class="contact__information">
+                        <table class="table-stripeds">
+                            <thead>
+                                <tr>
+                                    <th class="table_th">Product</th>
+                                    <th class="table_th">Quantity</th>
+                                    <th class="table_th">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in orderitems %}
+                                    <tr>
+                                        <td class="table_td">
+                                            <img src="{{ item.product.image.url }}" class="me-2" height="30px" width="30px">
+                                            {{ item.product.name }}
+                                        </td>
+                                        <td class="table_td">{{ item.quantity }}</td>
+                                        <td class="table_td">{{ item.price }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        
+                        <div class="footer_content">
+                            <div class="footer_cards">
+                                <h4 class="section__title-centers">
+                                    Total Price:
+                                    <span> ₹ {{ order.total_price }} </span>
+                                </h4>
+                            </br>
+                                <ul class="footer__data">
+                                <li class="section__title-centers table_td"> Payment Mode: <span class="table_td">{{ order.payment_mode }}</span> </li>
+                                <li class="section__title-centers table_td"> Order Status: <span class="table_td">{{ order.status }}</span> </li>
+                                <li class="section__title-centers table_td"> Tracking Number: <span class="table_td">{{ order.tracking_number }}</span> </li>
+                                </ul>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{%endblock%}

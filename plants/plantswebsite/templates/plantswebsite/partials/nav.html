@@ -15,29 +15,29 @@ Start Navigation Bar
                     <a href="{% url 'plantswebsite:home' %}" class="nav__link">Home</a>
                 </li>
                 <li class="nav__item">
-                    <a href="#about" class="nav__link">About</a>
-                </li>
-                <li class="nav__item">
                     <a href="{% url 'plantswebsite:shop' %}" class="nav__link">Shop</a>
                 </li>
                 {% if request.user.is_authenticated %}
                     <li class="nav__item">
-                        <a href="{% url 'plantswebsite:logout' %}" class="nav__link">Logout</a>
-                    </li>
-                {% else %}
-                    <li class="nav__item">
-                        <a href="{% url 'plantswebsite:register' %}" class="nav__link">Login/Register</a>
-                    </li>
-                {% endif %}
-                {% if request.user.is_authenticated %}
-                    <li class="nav__item">
-                        <a href="{% url 'plantswebsite:cart' %}" class="nav__link">Cart</a>
+                        <a href="{% url 'plantswebsite:cart' %}" class="nav__link">Cart{{ item.product_quantity }}</a>
                     </li>
                 {% else %}
                     <li class="nav__item">
                         <a href="{% url 'plantswebsite:register' %}" class="nav__link">Cart</a>
                     </li>
                 {% endif %}
+                <li class="nav__item">
+                    <a href="{% url 'plantswebsite:myorders' %}" class="nav__link">My Orders</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                <li class="nav__item">
+                    <a href="{% url 'plantswebsite:logout' %}" class="nav__link">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav__item">
+                    <a href="{% url 'plantswebsite:register' %}" class="nav__link">Login/Register</a>
+                </li>
+            {% endif %}
                 <li class="nav__item">
                     <a href="{% url 'plantswebsite:contact' %}" class="nav__link">Contact Us</a>
                 </li>

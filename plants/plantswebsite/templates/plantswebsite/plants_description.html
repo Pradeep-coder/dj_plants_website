@@ -58,10 +58,15 @@
                     {{ plants_object.highlights_four }}
                 </p>
             </div>
-
-            <a href="#" class="button button--flex addToCartBtn">
-                Add to Cart <i class="ri-arrow-right-up-line button__icon"></i>
-            </a>
+            {% if plants_object.quantity >= 1 %}
+                <button class="button button--flex addToCartBtn">
+                    Add to Cart <i class="ri-arrow-right-up-line button__icon"></i>
+                </button>
+            {% else %}
+                <button class="button button--flex" disabled>
+                    Out of Stock <i class="ri-arrow-right-down-line button__icon"></i>
+                </button>
+            {% endif %}
         </div>
     </div>
 </section>
