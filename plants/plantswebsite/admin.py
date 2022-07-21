@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import About, Cart, ContactProfile, LandingScreen, Order, OrderItem, Plants, Profile, UserProfile
+from .models import About, Cart, ContactProfile, LandingScreen, Order, OrderItem, Plants, Profile, Subscribe, UserProfile
 
 # Register your models here.
 @admin.register(UserProfile)
@@ -38,6 +38,10 @@ class OrderItemAdmin(admin.ModelAdmin):
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('id','user','phone','city','state','country','pincode')
+
+@admin.register(Subscribe)
+class SubscribeAdmin(admin.ModelAdmin):
+    list_display = ('id','email','timestamp')
 
 
 

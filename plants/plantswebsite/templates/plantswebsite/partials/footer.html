@@ -10,13 +10,16 @@
             <h3 class="footer__title">
                 Subscribe to our newsletter <br> to stay connected 
             </h3>
-            <div class="footer__subscribe">
-                <input type="email" placeholder="Enter mail" class="footer__input">
-                <button class="button button--flex footer__button">
-                    Subscribe
-                    <i class="ri-arrow-right-up-line button__icon"></i>
-                </button>
-            </div>
+            <form id="subscribeForm" method="POST" action="/subscribe/">
+                {% csrf_token %}
+                <div class="footer__subscribe">  
+                    <input type="email" name="SubcribeEmail" placeholder="Enter mail" class="footer__input" required>
+                    <button class="button button--flex footer__button">
+                        Subscribe
+                        <i class="ri-arrow-right-up-line button__icon"></i>
+                    </button>
+                </div>
+            </form>
         </div>
 
         <div class="footer_content">
@@ -32,6 +35,7 @@
             <h3 class="footer__title">Contact US</h3>
 
             <ul class="footer__data">
+                <li class="footer__information"><a href="{% url 'plantswebsite:contact' %}" class="button--link button--flex"> Share your thoughts! </a></li>
                 <li class="footer__information">+91- 123456</li>
                 <div class="footer__social">
                     <a href="https://www.facebook.com" class="footer__social-link">

@@ -13,6 +13,16 @@
     <h2 class="section__title-center">
         Shop From Our Exotic Plants
     </h2>
+    <form action="/searchPlantsProducts" method="POST">
+        {% csrf_token %}
+        <div class="shop__search">  
+            <input type="search" name="plantsSearch" id="searchPlants" class="search__input" required>
+            <button type="submit" class="button button--flex footer__button">
+                Search
+                <i class="ri-search-2-fill button__icon"></i>
+            </button>
+        </div>
+    </form>
     <p class="shop__description">
         Here are some selected plants from our showroom, all are in 
         excellent shape and has a long life span. Buy and enjoy best quality.

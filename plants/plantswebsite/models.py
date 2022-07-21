@@ -128,6 +128,19 @@ class ContactProfile(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+class Subscribe(models.Model):
+    class Meta:
+        verbose_name_plural = 'Subscribers'
+        verbose_name = 'Subscriber'
+        ordering = ['timestamp']
+
+    email = models.EmailField(verbose_name='email', max_length=150, null=False, blank=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.email}'
+
     
 
 

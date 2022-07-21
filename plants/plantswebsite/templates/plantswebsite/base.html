@@ -22,6 +22,7 @@
     ================================= -->
     {% comment %} <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"> {% endcomment %}
     <link rel="stylesheet" href="https://unpkg.com/swiper@7.0.5/swiper-bundle.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     {% block extend_header%}{%endblock%}
     <!-- ================================
@@ -50,6 +51,22 @@
     {% comment %} <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script> {% endcomment %}
     <script src="https://unpkg.com/swiper@7.0.5/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+        var availableTags = [];
+        $.ajax({
+            method: "GET",
+            url: "/plants-list",
+            success: function (response){
+                startAutoComplete(response);
+            }
+        });
+        function startAutoComplete(availableTags){
+            $( "#searchPlants" ).autocomplete({
+                source: availableTags
+                });
+        }
+    </script>
     {% comment %} <script src="{% static 'js/script.js' %}"></script> {% endcomment %}
 
     <!--SCROLL UP-->

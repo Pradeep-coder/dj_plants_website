@@ -1,3 +1,4 @@
+import email
 from multiprocessing import context
 from time import timezone
 from django.http import HttpResponse, JsonResponse
@@ -256,6 +257,7 @@ def razorpaycheck(request):
         'total_price': total_price
     })
 
+@login_required(login_url='login')
 def orders(request):
     userOrders = Order.objects.filter(user=request.user)
     context = {"userOrders":userOrders} 
@@ -267,5 +269,45 @@ def viewuserorders(request, t_no):
     context = {'order': order, 'orderitems': orderitems}
     return render(request, "plantswebsite/viewuserorders.html", context)
 
+def subscriber(request):
+    subscribeForm = Subscribe()
+    if request.method == "POST":
+        subscribeForm.email = request.POST.get('SubcribeEmail')
+        subscribeForm.save()
+        messages.success(request,"Thank You for Subscribing!")
+        
+    return redirect('/home')
+            
+def userpasswordreset(request):
+    if request.method == 'POST':
+        Usermail = request.POST.get('resetEmail')
+        password1 = request.POST.get('password1')
+        form = User.objects.get(email=Usermail)
+        form.set_password(password1)
+        form.save()
+        messages.success(request, "Password Reset Done! Login now.")
+        return redirect('/login')
+    return render(request, "plantswebsite/user_password_reset.html")
+
+def plantsSearchList(request):
+    plants = Plants.objects.filter(status=0).values_list('name', flat=True)
+    plantsList = list(plants)
+
+    return JsonResponse(plantsList, safe=False)
+
+def searchPlantsProducts(request):
+    if request.method == "POST":
+        searchTerm = request.POST.get('plantsSearch')
+        if searchTerm == "":
+            return redirect(request.META.get('HTTP_REFERER'))
+        else:
+            product = Plants.objects.filter(name__contains=searchTerm).first()
+
+            if product:
+                return redirect('shop/'+str(product.id)+'/')
+            else:
+                return redirect(request.META.get('HTTP_REFERER'))
+
+    return redirect(request.META.get('HTTP_REFERER'))
 
 

@@ -137,7 +137,8 @@ of the website on dark theme
     background-color: var(--first-color-dark);
 }
 .dark-theme .product__circle,
-.dark-theme .footer__subscribe{
+.dark-theme .footer__subscribe,
+.dark-theme .shop__search{
     background-color: var(--container-color);
 }
 .dark-theme .scroll__header{
@@ -834,8 +835,23 @@ of the website on dark theme
     justify-content: space-between;
     border-radius: .5rem;
 }
+.shop__search{
+    background-color: var(--first-color-lighten);
+    padding: .75rem;
+    display: flex;
+    justify-content: space-between;
+    border-radius: .5rem;
+}
 .footer__input{
     width: 70%;
+    padding: 0 .5rem;
+    background: none;
+    color: var(--text-color);
+    border: none;
+    outline: none;
+}
+.search__input{
+    width: 60%;
     padding: 0 .5rem;
     background: none;
     color: var(--text-color);
@@ -1004,6 +1020,10 @@ of the website on dark theme
     .footer__subscribe{
         width: 400px;
     }
+    .shop__search{
+        width: 333px;
+        margin: auto;
+    }
     .incdec__subscribe{
         width: 200px;
     }
@@ -1056,6 +1076,10 @@ of the website on dark theme
     }
     .footer__subscribe{
         width: initial;
+    }
+    .shop__search{
+        width: 333px;
+        margin: auto;
     }
     .incdec__subscribe{
         width: max-content;

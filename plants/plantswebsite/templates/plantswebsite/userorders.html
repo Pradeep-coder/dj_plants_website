@@ -10,6 +10,7 @@
 {% block content %}
 <!--==========My Orders PAGE===========-->
 <section class="myordersdata section container" id="viewmyorders">
+    {% if userOrders %}
         {% for order in userOrders %}
         <div class="footer__container container grid product_data">
             <div class="footer_content">
@@ -38,8 +39,13 @@
                 </div>
             </div>
         </div>
-    </br>
-{% endfor %}
+        </br>
+        {% endfor %}
+    {% else %}
+        <h4 class="section__title-center">My Orders is Empty!</h4>
+        </br>
+        <h5 class="section__title-center">Get Started! <a href="{% url 'plantswebsite:shop' %}" class="footer__logo-icon"> Shop Now.</a></h5>
+    {% endif %}
 
 </section>
 
