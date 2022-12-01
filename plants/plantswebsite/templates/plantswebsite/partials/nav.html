@@ -19,11 +19,11 @@ Start Navigation Bar
                 </li>
                 {% if request.user.is_authenticated %}
                     <li class="nav__item">
-                        <a href="{% url 'plantswebsite:cart' %}" class="nav__link">Cart{{ item.product_quantity }}</a>
+                        <a href="{% url 'plantswebsite:cart' %}" class="nav__link qty-input">Cart{{ cart.product_quantity }}</a>
                     </li>
                 {% else %}
                     <li class="nav__item">
-                        <a href="{% url 'plantswebsite:register' %}" class="nav__link">Cart</a>
+                        <a href="{% url 'plantswebsite:login' %}" class="nav__link">Cart</a>
                     </li>
                 {% endif %}
                 {% if request.user.is_authenticated %}
@@ -37,7 +37,7 @@ Start Navigation Bar
                 </li>
             {% else %}
                 <li class="nav__item">
-                    <a href="{% url 'plantswebsite:register' %}" class="nav__link">Login/Register</a>
+                    <a href="{% url 'plantswebsite:login' %}" class="nav__link">Login/Register</a>
                 </li>
             {% endif %}
                 <li class="nav__item">

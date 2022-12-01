@@ -50,6 +50,8 @@ $(document).ready(function (){
             },
             dataType: "dataType",
             success: function (response){
+                alert("All fields are mandatory");
+                swal("Success", "Added to Cart", "success");
                 console.log(response)
             }
         });

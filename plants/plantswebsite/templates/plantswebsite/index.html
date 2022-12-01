@@ -24,7 +24,7 @@ Start Content
                 <p class="home__description">
                     {{landingscreens.description}} 
                     {% if user.is_authenticated %}
-                     <strong>{{user}}</strong>! Let's begin the journey!
+                     <strong style="text-transform:uppercase;">{{user}}</strong>! Let's begin the journey!
                     {% endif %}
                 </p>
                 <a href="#products" class="button button--flex">
@@ -137,7 +137,7 @@ Start Content
                     
                 <a href="{{p.id}}"><img src="{{ p.image.url }}" alt="" class="product__img"></a>
                     <h3 class="product__title">{{ p.name }}</h3>
-                    <span class="product__price">${{ p.price }}</span>
+                    <span class="product__price">₹ {{ p.price }} <s class="steps__card-description">₹ {{p.original_price}}</s></span>
                     <button class="button--flex product__button">
                         <i class="ri-shopping-bag-line"></i>
                     </button>
@@ -161,7 +161,7 @@ Start Content
             <article class="slideshow__card">
                 <a href="{{s.id}}"><img src="{{s.image.url}}" alt="slideshow_plants" class="slideshow__img"></a>
                 <h3 class="slideshow__title">{{s.name}}</h3>
-                <span class="slideshow__price">${{s.price}}</span>
+                <span class="slideshow__price">₹ {{s.price}} <s class="steps__card-description">₹ {{s.original_price}}</s></span>
                 <button class="button--flex slideshow__button">
                     <i class="ri-shopping-bag-line"></i>
                 </button>

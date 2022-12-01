@@ -36,7 +36,7 @@
                 
                 <a href="{{s.id}}"> <img src="{{ s.image.url }}" alt="" class="shop__img"></a>
                 <h3 class="shop__title">{{ s.name }}</h3>
-                <span class="shop__price">${{ s.price }}</span>
+                <span class="shop__price">₹ {{ s.price }} <s class="steps__card-description">₹ {{s.original_price}}</s></span>
                 <button class="button--flex product__button">
                     <i class="ri-shopping-bag-line"></i>
                 </button>

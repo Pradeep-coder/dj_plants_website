@@ -1,5 +1,3 @@
-import email
-from multiprocessing import context
 from time import timezone
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
@@ -14,6 +12,8 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
 import random
 from django.contrib.auth.models import User
+from django.conf import settings
+from django.template.loader import get_template
 
 # Create your views here.
 class IndexView(generic.TemplateView):
@@ -280,13 +280,17 @@ def subscriber(request):
             
 def userpasswordreset(request):
     if request.method == 'POST':
-        Usermail = request.POST.get('resetEmail')
-        password1 = request.POST.get('password1')
-        form = User.objects.get(email=Usermail)
-        form.set_password(password1)
-        form.save()
-        messages.success(request, "Password Reset Done! Login now.")
-        return redirect('/login')
+        try:
+            Usermail = request.POST.get('resetEmail')
+            password1 = request.POST.get('password1')
+            form = User.objects.get(email=Usermail)
+            form.set_password(password1)
+            form.save()
+            messages.success(request, "Password Reset Done! Login now.")
+            return redirect('/login')
+        except Exception as e:
+            print(e)
+            messages.success(request, "User Mail does not exist!")
     return render(request, "plantswebsite/user_password_reset.html")
 
 def plantsSearchList(request):
