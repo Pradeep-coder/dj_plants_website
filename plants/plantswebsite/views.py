@@ -12,8 +12,10 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
 import random
 from django.contrib.auth.models import User
-from django.conf import settings
+from django.http import HttpResponse
 from django.template.loader import get_template
+from xhtml2pdf import pisa
+
 
 # Create your views here.
 class IndexView(generic.TemplateView):
@@ -217,6 +219,8 @@ def placeorder(request):
             trackNumber = newOrder.fname[:5] + str(random.randint(1111111,9999999))
 
         newOrder.tracking_number = trackNumber
+        #Update the order status
+        newOrder.status = 'COMPLETED' 
         newOrder.save()
 
         newOrderItems = Cart.objects.filter(user=request.user)
@@ -314,4 +318,24 @@ def searchPlantsProducts(request):
 
     return redirect(request.META.get('HTTP_REFERER'))
 
-
+def render_pdf_view(request, t_no):
+    template_path = 'plantswebsite/invoice.html'
+    order = Order.objects.filter(tracking_number=t_no).filter(user=request.user).first()
+    orderitems = OrderItem.objects.filter(order=order)
+    context = {'order': order, 'orderitems': orderitems}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    #To Download PDF
+    response['Content-Disposition'] = f'attachment; filename="{order.tracking_number}'+'.pdf"'
+    #To Display PDF
+    # response['Content-Disposition'] = 'filename="report.pdf"'
+    # find the template and render it
+    template = get_template(template_path)
+    html = template.render(context)
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response

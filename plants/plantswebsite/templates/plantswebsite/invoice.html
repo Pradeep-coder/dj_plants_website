@@ -1,0 +1,241 @@
+{% load static %}
+{% block title %}Recent Gardener | PDF Invoice{% endblock %}
+{% block decription %}{% endblock %}
+{% block keywords %}{% endblock %}
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <style>
+  .invoice-box {
+    max-width: 800px;
+    margin: auto;
+    padding: 30px;
+    font-size: 16px;
+    line-height: 24px;
+    font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    color: #555;
+  }
+  
+  .invoice-box table {
+    width: 100%;
+    line-height: inherit;
+    text-align: left;
+  }
+  
+  .invoice-box table td {
+    padding: 5px;
+    vertical-align: top;
+  }
+  
+  .invoice-box table tr td:nth-child(2) {
+    text-align: right;
+  }
+  
+  .invoice-box table tr.top table td {
+    padding-bottom: 20px;
+  }
+  
+  .invoice-box table tr.top table td.title {
+    font-size: 45px;
+    line-height: 45px;
+    color: #333;
+  }
+  
+  .invoice-box table tr.information table td {
+    padding-bottom: 40px;
+  }
+  
+  .invoice-box table tr.heading td {
+    background: #eee;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+  }
+  
+  .invoice-box table tr.details td {
+    padding-bottom: 20px;
+  }
+  
+  .invoice-box table tr.item td{
+    border-bottom: 1px solid #eee;
+  }
+  
+  .invoice-box table tr.item.last td {
+    border-bottom: none;
+  }
+  
+  .invoice-box table tr.total td:nth-child(2) {
+    border-top: 2px solid #eee;
+    font-weight: bold;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .invoice-box table tr.top table td {
+      width: 100%;
+      display: block;
+      text-align: center;
+    }
+    
+    .invoice-box table tr.information table td {
+      width: 100%;
+      display: block;
+      text-align: center;
+    }
+  }
+  div.divFooter {
+    position: fixed;
+    height: 30px;
+    background-color: purple;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+  }
+  
+  /** RTL **/
+  .rtl {
+    direction: rtl;
+    font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+  }
+  
+  .rtl table {
+    text-align: right;
+  }
+  
+  .rtl table tr td:nth-child(2) {
+    text-align: left;
+  }
+  @page {
+    size: a4 portrait;
+    margin: 0mm 0mm 0mm 0mm;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="invoice-box">
+    <table cellpadding="0" cellspacing="0">
+      <tr class="top">
+        <td colspan="2">
+          <table>
+            <tr>
+              <td class="title">
+                <a href="#" class="footer__logo">
+                    <i class="ri-leaf-line footer__logo-icon"></i> Recent Gardener
+                </a>
+            </td>
+              <td>
+                Invoice #: {{ order.tracking_number }}<br>
+                Created: {{ order.created_at }}<br>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      
+      <tr class="information">
+        <td colspan="2">
+          <table>
+            <tr>
+              <td>
+                Recent Gardener<br>
+                123456 - India<br>
+                Bangalore - Karnataka<br>
+                123-456-789
+              </td>
+              <td>
+                {{ order.fname }} {{ order.lname }}<br>
+                {{ order.phone }}<br>
+                {{ order.email }}<br>
+                {{ order.address }},{{ order.city }}<br>
+                {{ order.state }},{{ order.country }},{{ order.pincode }} 
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  {% block content %}
+<!--==========My Order Detailed PAGE===========-->
+<section class="checkout section" id="checkout">
+    <div class="contact__container container grid">
+{% comment %} Second half {% endcomment %}
+        <div class="contact__box checkout_table">
+            <h2 class="section__title-centers">
+                <table>
+                    <tr>
+                        <th class="table_th">Order Details</th>
+                        <th class="table_th"></th>
+                        <th class="table_td"></th>
+                    </tr>
+                </table> 
+                <hr>
+            </h2>
+            <div class="checkout__data section__title-table">
+                <div class="contact__information">
+                        <table class="table-stripeds">
+                            <thead>
+                                <tr>
+                                    <th class="table_th">Product</th>
+                                    <th class="table_th">Quantity</th>
+                                    <th class="table_th">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in orderitems %}
+                                    <tr>
+                                        <th class="table_th">
+                                            {% comment %} <img src="{{ item.product.image.url }}" class="me-2" height="30px" width="30px"> {% endcomment %}
+                                            {{ item.product.name }}
+                                        </th>
+                                        <th class="table_th">{{ item.quantity }}</th>
+                                        <th class="table_td">{{ item.price }}</th>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <hr>
+                        <br>
+                        <div class="footer_content">
+                            <div class="footer_cards">
+                            <table>
+                                <tr>
+                                    <th class="table_th"></th>
+                                    <th class="table_th"></th>
+                                    <th class="table_td">Total Price: Rs. {{ order.total_price }}</th>
+                                </tr>
+                            </table> 
+                            </br>
+                            <table>
+                                <hr>
+                                <tr>
+                                        <th class="section__title-centers table_td"> Payment Mode: {{ order.payment_mode }} </th>
+                                        <th class="section__title-centers table_td"> Order Status: {{ order.status }} </th>
+                                        <th class="section__title-centers table_td"> Tracking Number: {{ order.tracking_number }} </th>
+                                </tr>
+                            </table>
+                            <hr>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br>
+<h2 class="section__title-centers">
+    <table>
+        <tr>
+            <th class="table_th"></th>
+            <th class="table_th"><p class="footer__copy">&#169; RecentGardener. All Rights Reserved.</p></th>
+            <th class="table_td"></th>
+        </tr>
+    </table> 
+</h2>
+
+{%endblock%}
+ 
+</body>
+</html>

@@ -41,12 +41,12 @@
             <div class="contact__container">
                 <a href="{% url 'plantswebsite:myorders' %}" class="button button--flex">
                     Back
-                    <i class="ri-arrow-right-up-line button__icon"></i>
+                    <i class="ri-arrow-go-back-line button__icon"></i>
                 </a>
-                <button type="button" class="button button--flex">
+                <a href="{% url 'plantswebsite:render_pdf_view' order.tracking_number %}" class="button button--flex">
                     Download Invoice
-                    <i class="ri-arrow-right-up-line button__icon"></i>
-                </button>
+                    <i class="ri-download-line button__icon"></i>
+                </a>
             </div>
         </div>
 {% comment %} Second half {% endcomment %}
